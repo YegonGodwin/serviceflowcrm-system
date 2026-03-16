@@ -1,0 +1,95 @@
+import { Bell, CirclePlus, FileText, Power, Search, Settings } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+interface TopbarProps {
+  title?: string;
+}
+
+export default function Topbar({ title = "Dashboard" }: TopbarProps) {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handlePlusClick = () => {
+    if (user?.role === 'admin') {
+      navigate('/admin/service-request');
+    } else if (user?.role === 'client') {
+      navigate('/client/request-service');
+    }
+  };
+
+  const handleSettingsClick = () => {
+    if (user?.role === 'admin') {
+      navigate('/admin/settings');
+    } else if (user?.role === 'client') {
+      navigate('/client/profile');
+    } else {
+      navigate('/employee/profile');
+    }
+  };
+
+  return (
+    <header className="dashboard-topbar">
+      <h1>{title}</h1>
+      <div className="topbar-icons" aria-label="Toolbar">
+        <button 
+          type="button" 
+          aria-label="Search"
+          className="hover:text-[#F26323] transition-colors"
+          title="Search"
+        >
+          <Search size={22} />
+        </button>
+        <button 
+          type="button" 
+          aria-label="Documents"
+          className="hover:text-[#F26323] transition-colors"
+          title="Documents"
+          onClick={() => navigate(user?.role === 'admin' ? '/admin/reports' : '/client/contracts')}
+        >
+          <FileText size={21} />
+        </button>
+        <button 
+          type="button" 
+          aria-label="Add New"
+          className="hover:text-[#F26323] transition-colors"
+          title="Add New"
+          onClick={handlePlusClick}
+        >
+          <CirclePlus size={22} />
+        </button>
+        <button 
+          type="button" 
+          aria-label="Notifications"
+          className="hover:text-[#F26323] transition-colors relative"
+          title="Notifications"
+          onClick={() => navigate(user?.role === 'admin' ? '/admin/feedback' : '/client/feedback')}
+        >
+          <Bell size={21} />
+          <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+        </button>
+        <button 
+          type="button" 
+          aria-label="Settings"
+          className="hover:text-[#F26323] transition-colors"
+          title="Settings"
+          onClick={handleSettingsClick}
+        >
+          <Settings size={22} />
+        </button>
+        <button 
+          type="button" 
+          aria-label="Logout"
+          className="hover:text-red-500 transition-colors"
+          title="Logout"
+          onClick={() => {
+            logout();
+            navigate('/login');
+          }}
+        >
+          <Power size={23} />
+        </button>
+      </div>
+    </header>
+  );
+}

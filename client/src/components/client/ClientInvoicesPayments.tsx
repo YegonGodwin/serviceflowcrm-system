@@ -1,4 +1,5 @@
-import { AlignJustify, Briefcase, CircleAlert, Filter, Loader2, CreditCard, CheckCircle, Smartphone, X } from "lucide-react";
+import { Briefcase, CircleAlert, Filter, Loader2, CheckCircle, Smartphone, X, Download } from "lucide-react";
+import { downloadInvoicePDF } from "../../lib/downloadInvoice";
 import Topbar from "../admin/Topbar";
 import ClientSidebar from "./ClientSidebar";
 import { useEffect, useState } from "react";
@@ -127,6 +128,7 @@ export default function ClientInvoicesPayments() {
                     <th>Due Date</th>
                     <th>Status</th>
                     <th>Action</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -190,6 +192,15 @@ export default function ClientInvoicesPayments() {
                             <CheckCircle size={14} /> Paid
                           </span>
                         )}
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => downloadInvoicePDF(entry)}
+                          title="Download Invoice PDF"
+                          className="flex items-center gap-1 px-2 py-1 text-[11px] font-bold text-blue-600 border border-blue-200 rounded hover:bg-blue-50 transition-colors"
+                        >
+                          <Download size={13} /> PDF
+                        </button>
                       </td>
                     </tr>
                   ))}

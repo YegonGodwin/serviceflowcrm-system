@@ -5,7 +5,6 @@ import {
     Download,
     Filter,
     HandCoins,
-    MoreVertical,
     Search,
     TrendingUp,
     Wallet,
@@ -14,6 +13,7 @@ import {
     CheckCircle,
     Clock
 } from "lucide-react";
+import { downloadInvoicePDF } from "../../lib/downloadInvoice";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { useEffect, useState } from "react";
@@ -203,6 +203,7 @@ export default function Finances() {
                                             <th>Amount</th>
                                             <th>Due Date</th>
                                             <th>Status</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -225,6 +226,15 @@ export default function Finances() {
                                                     <span className={`status-badge ${getStatusColor(inv.status)}`}>
                                                         {inv.status}
                                                     </span>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        onClick={() => downloadInvoicePDF(inv)}
+                                                        title="Download Invoice PDF"
+                                                        className="flex items-center gap-1 px-2 py-1 text-[11px] font-bold text-blue-600 border border-blue-200 rounded hover:bg-blue-50 transition-colors"
+                                                    >
+                                                        <Download size={13} /> PDF
+                                                    </button>
                                                 </td>
                                             </tr>
                                         ))}

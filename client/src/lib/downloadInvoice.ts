@@ -45,7 +45,7 @@ export async function downloadInvoicePDF(inv: InvoiceData) {
   try {
     const { dataUrl, width, height } = await loadImageAsBase64('/logo2.png');
     const aspectRatio = width / height;
-    const logoH = headerH * 1.6;          // taller than header so whitespace is cropped
+    const logoH = headerH * 3;          // scale up aggressively to burn through internal whitespace
     const logoW = logoH * aspectRatio;
     const logoX = margin - 10;
     const logoY = (headerH - logoH) / 2;  // vertically centered (overflows clipped by header)

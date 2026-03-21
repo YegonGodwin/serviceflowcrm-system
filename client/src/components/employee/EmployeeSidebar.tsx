@@ -49,13 +49,7 @@ export default function EmployeeSidebar({ onLogout, activeItem }: EmployeeSideba
   return (
     <aside className="dashboard-sidebar employee-sidebar">
       <div className="sidebar-brand mb-4">
-        <div className="sidebar-brand-mark">
-          <span className="sidebar-s text-[#ffffff]">S</span>
-          <span className="sidebar-f text-[#F26323]">F</span>
-        </div>
-        <h1 className="sidebar-brand-text">
-          ServiceFlow <span>CRM</span>
-        </h1>
+        <img src="/logo2.png" alt="ServiceFlow CRM" className="sidebar-logo" />
       </div>
 
       <nav className="sidebar-nav" aria-label="Employee Sidebar">

@@ -79,10 +79,14 @@ export const initiateSTKPush = async (phoneNumber, amount, invoiceNumber) => {
 // Business to Customer (B2C) - Send money to employees
 export const initiateB2CPayout = async (phoneNumber, amount, remarks) => {
     const accessToken = await getAccessToken();
-    const shortcode = process.env.SHORTCODE;
+    const shortcode = process.env.B2C_SHORTCODE || process.env.SHORTCODE || '600000';
     const initiatorName = process.env.INITIATOR_NAME || 'testapi';
-    const securityCredential = process.env.SECURITY_CREDENTIAL; // This must be encrypted using the public certificate
-    const resultUrl = process.env.CALLBACK_URL; // Or a specific B2C result URL
+    const securityCredential = process.env.SECURITY_CREDENTIAL; 
+    const resultUrl = process.env.B2C_CALLBACK_URL || process.env.CALLBACK_URL;
+
+    if (!securityCredential && process.env.NODE_ENV !== 'production') {
+        console.warn('Warning: SECURITY_CREDENTIAL is not set. B2C payout might fail in sandbox if not provided.');
+    }
 
     // Ensure phone number is in format 2547XXXXXXXX
     let formattedPhone = phoneNumber.replace(/[^0-9]/g, '');
@@ -105,6 +109,8 @@ export const initiateB2CPayout = async (phoneNumber, amount, remarks) => {
         Occasion: 'ServiceFlow Payment',
     };
 
+    console.log(`Initiating B2C Payout: Amount ${amount} to ${formattedPhone} using Shortcode ${shortcode}`);
+
     try {
         const response = await axios.post(
             'https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest',
@@ -119,9 +125,13 @@ export const initiateB2CPayout = async (phoneNumber, amount, remarks) => {
     } catch (error) {
         if (error.response) {
             console.error('Safaricom B2C API Error:', error.response.status, error.response.data);
+            // Provide more specific info if it's a 401
+            if (error.response.status === 401) {
+                console.error('B2C 401 Error Hint: Ensure your Consumer Key/Secret are authorized for B2C and PartyA (Shortcode) is a B2C shortcode (e.g. 600000 in sandbox).');
+            }
         } else {
             console.error('Error initiating M-Pesa B2C Payout:', error.message);
         }
-        throw new Error('Failed to initiate employee payout via M-Pesa');
+        throw new Error(`Failed to initiate employee payout: ${error.response?.data?.errorMessage || error.message}`);
     }
 };

@@ -30,7 +30,7 @@ export const getEarnings = async (req, res) => {
 export const initiatePayout = async (req, res) => {
     try {
         const { id } = req.params;
-        const earning = await Earnings.findById(id).populate('employee');
+        const earning = await Earnings.findById(id).populate('employee').populate('invoice');
 
         if (!earning) {
             return res.status(404).json({ message: 'Earning record not found' });
@@ -48,7 +48,7 @@ export const initiatePayout = async (req, res) => {
         const payoutResponse = await initiateB2CPayout(
             employeePhone, 
             earning.commissionAmount, 
-            `Payout for ${earning.invoice.invoiceNumber}`
+            earning.invoice ? `Payout for ${earning.invoice.invoiceNumber}` : 'Service Commission Payment'
         );
 
         if (payoutResponse.ResponseCode === '0') {

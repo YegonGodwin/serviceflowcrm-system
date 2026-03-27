@@ -1,4 +1,4 @@
-import { AlignJustify, FileSignature, Filter, MoreVertical, Search, Loader2, Plus, X, User, Calendar, DollarSign, FileText } from "lucide-react";
+import { FileSignature, Filter, Search, Loader2, Plus, X, User, Calendar, DollarSign, FileText, CheckCircle, Eye } from "lucide-react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ export default function Contracts() {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [viewContract, setViewContract] = useState<any>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -222,8 +223,13 @@ export default function Contracts() {
                         </span>
                       </td>
                       <td>
-                        <button type="button" className="btn-action">
-                          <MoreVertical size={16} />
+                        <button
+                          type="button"
+                          className="btn-action"
+                          onClick={() => setViewContract(contract)}
+                          title="View contract details"
+                        >
+                          <Eye size={16} />
                         </button>
                       </td>
                     </tr>
@@ -393,6 +399,79 @@ export default function Contracts() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {/* Contract Detail View Modal (Admin) */}
+      {viewContract && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <div className="bg-[#222659] p-6 text-white flex justify-between items-center shrink-0">
+              <div>
+                <h3 className="text-xl font-bold">{viewContract.title}</h3>
+                <p className="text-xs opacity-70 font-mono">ID: {viewContract._id}</p>
+              </div>
+              <button onClick={() => setViewContract(null)} className="hover:bg-white/10 p-1 rounded">
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="p-8 overflow-y-auto space-y-6">
+              <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl text-sm">
+                <div><span className="text-gray-500 font-semibold">Client:</span> {viewContract.client?.name}</div>
+                <div><span className="text-gray-500 font-semibold">Amount:</span> Ksh {viewContract.amount?.toLocaleString()}</div>
+                <div><span className="text-gray-500 font-semibold">Frequency:</span> <span className="capitalize">{viewContract.paymentFrequency}</span></div>
+                <div>
+                  <span className="text-gray-500 font-semibold">Status:</span>{" "}
+                  <span className={`status-badge ${viewContract.status === 'active' ? 'status-active' : viewContract.status === 'pending' ? 'status-suspended !bg-yellow-100 !text-yellow-700' : 'status-inactive'}`}>
+                    {viewContract.status}
+                  </span>
+                </div>
+                <div><span className="text-gray-500 font-semibold">Start:</span> {new Date(viewContract.startDate).toLocaleDateString()}</div>
+                <div><span className="text-gray-500 font-semibold">End:</span> {new Date(viewContract.endDate).toLocaleDateString()}</div>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-2">Terms & Conditions</h4>
+                <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  {viewContract.terms || "No terms specified."}
+                </p>
+              </div>
+
+              {viewContract.signedAt && (
+                <div className="flex items-center gap-2 text-green-600 font-bold text-sm bg-green-50 p-3 rounded-lg border border-green-100">
+                  <CheckCircle size={18} />
+                  Digitally signed on {new Date(viewContract.signedAt).toLocaleString()}
+                </div>
+              )}
+
+              {viewContract.signature ? (
+                <div className="border rounded-xl p-4 bg-gray-50">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Client Digital Signature</p>
+                  <img
+                    src={viewContract.signature}
+                    alt="Client digital signature"
+                    className="max-h-24 border border-gray-200 rounded-lg bg-white p-2"
+                  />
+                </div>
+              ) : (
+                viewContract.status === 'pending' && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
+                    Awaiting client signature.
+                  </div>
+                )
+              )}
+            </div>
+
+            <div className="p-6 border-t bg-gray-50 shrink-0">
+              <button
+                type="button"
+                onClick={() => setViewContract(null)}
+                className="w-full py-3 border border-gray-300 rounded-lg font-semibold hover:bg-white text-gray-700 transition-all"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

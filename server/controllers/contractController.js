@@ -61,33 +61,32 @@ export const updateContract = async (req, res) => {
 
 export const signContract = async (req, res) => {
     try {
+        const { signatureData } = req.body;
+
+        if (!signatureData) {
+            return res.status(400).json({ message: 'Signature is required to sign the contract' });
+        }
+
         const contract = await Contract.findById(req.params.id);
 
-        if (contract) {
-            // Log to help debug if it fails (not visible to user but good practice)
-            console.log(`Signing contract ${req.params.id} for user ${req.user._id}`);
-            console.log(`Contract client ID: ${contract.client}`);
-
-            // Ensure ownership - using .equals() for ObjectIds is safer in some Mongoose versions
-            if (contract.client.toString() !== req.user._id.toString()) {
-                return res.status(403).json({ 
-                    message: 'Unauthorized to sign this contract',
-                    debug: { contractClient: contract.client, user: req.user._id }
-                });
-            }
-
-            if (contract.status !== 'pending') {
-                return res.status(400).json({ message: 'Only pending contracts can be signed' });
-            }
-
-            contract.status = 'active';
-            contract.signedAt = new Date();
-
-            const updatedContract = await contract.save();
-            res.json(updatedContract);
-        } else {
-            res.status(404).json({ message: 'Contract not found' });
+        if (!contract) {
+            return res.status(404).json({ message: 'Contract not found' });
         }
+
+        if (contract.client.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: 'Unauthorized to sign this contract' });
+        }
+
+        if (contract.status !== 'pending') {
+            return res.status(400).json({ message: 'Only pending contracts can be signed' });
+        }
+
+        contract.status = 'active';
+        contract.signedAt = new Date();
+        contract.signature = signatureData; // base64 PNG from canvas
+
+        const updatedContract = await contract.save();
+        res.json(updatedContract);
     } catch (error) {
         console.error("Sign Contract Error:", error);
         res.status(500).json({ message: error.message });

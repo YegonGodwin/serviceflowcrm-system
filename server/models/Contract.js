@@ -40,6 +40,10 @@ const contractSchema = new mongoose.Schema({
         type: Date,
         default: null,
     },
+    signature: {
+        type: String,
+        default: null,
+    },
 }, {
     timestamps: true,
 });

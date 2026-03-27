@@ -55,7 +55,7 @@ export default function Sidebar({ onLogout, activeItem }: SidebarProps) {
   };
 
   return (
-    <aside className="dashboard-sidebar">
+    <aside className="dashboard-sidebar admin-sidebar">
       <div className="sidebar-brand mb-4">
         <img src="/logo2.png" alt="ServiceFlow CRM" className="sidebar-logo" />
       </div>

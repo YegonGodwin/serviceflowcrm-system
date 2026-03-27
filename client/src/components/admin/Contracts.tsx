@@ -1,9 +1,10 @@
-import { FileSignature, Filter, Search, Loader2, Plus, X, User, Calendar, DollarSign, FileText, CheckCircle, Eye } from "lucide-react";
+import { FileSignature, Filter, Search, Loader2, Plus, X, User, Calendar, DollarSign, FileText, CheckCircle, Eye, Download } from "lucide-react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
+import { downloadContractPDF } from "../../lib/downloadContract";
 
 export default function Contracts() {
   const { logout } = useAuth();
@@ -463,13 +464,21 @@ export default function Contracts() {
               )}
             </div>
 
-            <div className="p-6 border-t bg-gray-50 shrink-0">
+            <div className="p-6 border-t bg-gray-50 shrink-0 flex gap-3">
               <button
                 type="button"
                 onClick={() => setViewContract(null)}
-                className="w-full py-3 border border-gray-300 rounded-lg font-semibold hover:bg-white text-gray-700 transition-all"
+                className="flex-1 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-white text-gray-700 transition-all"
               >
                 Close
+              </button>
+              <button
+                type="button"
+                onClick={() => downloadContractPDF(viewContract)}
+                className="flex-1 py-3 bg-[#222659] text-white rounded-lg font-semibold hover:bg-[#1a1e4a] transition-all flex items-center justify-center gap-2"
+              >
+                <Download size={18} />
+                Download PDF
               </button>
             </div>
           </div>

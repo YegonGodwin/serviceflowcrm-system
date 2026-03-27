@@ -1,12 +1,13 @@
 import {
   AlignJustify, Briefcase, CircleAlert, Filter, MoreVertical, Search,
-  Loader2, X, FileSignature, CheckCircle, Calendar, HandCoins, PenLine, Trash2
+  Loader2, X, FileSignature, CheckCircle, Calendar, HandCoins, PenLine, Trash2, Download
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Topbar from "../admin/Topbar";
 import ClientSidebar from "./ClientSidebar";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
+import { downloadContractPDF } from "../../lib/downloadContract";
 
 export default function ClientContracts() {
   const { logout, user } = useAuth();
@@ -405,6 +406,17 @@ export default function ClientContracts() {
               >
                 Close
               </button>
+
+              {selectedContract.status !== 'pending' && (
+                <button
+                  type="button"
+                  onClick={() => downloadContractPDF(selectedContract)}
+                  className="flex-1 py-3 bg-[#222659] text-white rounded-lg font-semibold hover:bg-[#1a1e4a] transition-all flex items-center justify-center gap-2"
+                >
+                  <Download size={18} />
+                  Download PDF
+                </button>
+              )}
 
               {selectedContract.status === 'pending' && signatureStep === 'review' && (
                 <button

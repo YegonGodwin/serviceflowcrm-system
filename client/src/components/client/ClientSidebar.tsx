@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Briefcase,
@@ -60,6 +61,16 @@ interface ClientSidebarProps {
 export default function ClientSidebar({ onLogout, activeItem }: ClientSidebarProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const activeLinkRef = useRef<HTMLAnchorElement>(null);
+
+  useLayoutEffect(() => {
+    if (activeLinkRef.current) {
+      activeLinkRef.current.scrollIntoView({
+        behavior: "auto",
+        block: "nearest",
+      });
+    }
+  }, [location.pathname, activeItem]);
 
   const handleLogout = () => {
     if (onLogout) {
@@ -93,6 +104,7 @@ export default function ClientSidebar({ onLogout, activeItem }: ClientSidebarPro
                   <Link
                     key={item.label}
                     to={item.path}
+                    ref={isActive(item.path, item.label) ? activeLinkRef : null}
                     className={`sidebar-link ${isActive(item.path, item.label) ? "is-active" : ""}`}
                   >
                     <div className="link-icon">

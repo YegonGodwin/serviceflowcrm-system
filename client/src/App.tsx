@@ -23,6 +23,7 @@ import EmployeeHistory from "./components/employee/EmployeeHistory";
 import EmployeeProfile from "./components/employee/EmployeeProfile";
 import EmployeeEarnings from "./components/employee/EmployeeEarnings";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { SidebarProvider } from "./context/SidebarContext";
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles?: string[] }) => {
   const { user, loading } = useAuth();
@@ -37,61 +38,63 @@ const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode,
 const App = () => {
   return (
     <AuthProvider>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        
-        {/* Admin Routes */}
-        <Route path="/admin/*" element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <Routes>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="employees" element={<Employees />} />
-              <Route path="clients" element={<Clients />} />
-              <Route path="service-request" element={<ServiceRequest />} />
-              <Route path="contracts" element={<Contracts />} />
-              <Route path="finances" element={<Finances />} />
-              <Route path="feedback" element={<Feedback />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Routes>
-          </ProtectedRoute>
-        } />
+      <SidebarProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/*" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Routes>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="employees" element={<Employees />} />
+                <Route path="clients" element={<Clients />} />
+                <Route path="service-request" element={<ServiceRequest />} />
+                <Route path="contracts" element={<Contracts />} />
+                <Route path="finances" element={<Finances />} />
+                <Route path="feedback" element={<Feedback />} />
+                <Route path="reports" element={<Reports />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="*" element={<Navigate to="dashboard" replace />} />
+              </Routes>
+            </ProtectedRoute>
+          } />
 
-        {/* Client Routes */}
-        <Route path="/client/*" element={
-          <ProtectedRoute allowedRoles={['client']}>
-            <Routes>
-              <Route path="dashboard" element={<ClientDashboard />} />
-              <Route path="request-service" element={<ClientRequestService />} />
-              <Route path="service-progress" element={<ClientServiceProgress />} />
-              <Route path="contracts" element={<ClientContracts />} />
-              <Route path="invoices-payments" element={<ClientInvoicesPayments />} />
-              <Route path="feedback" element={<ClientFeedback />} />
-              <Route path="profile" element={<ClientProfile />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Routes>
-          </ProtectedRoute>
-        } />
+          {/* Client Routes */}
+          <Route path="/client/*" element={
+            <ProtectedRoute allowedRoles={['client']}>
+              <Routes>
+                <Route path="dashboard" element={<ClientDashboard />} />
+                <Route path="request-service" element={<ClientRequestService />} />
+                <Route path="service-progress" element={<ClientServiceProgress />} />
+                <Route path="contracts" element={<ClientContracts />} />
+                <Route path="invoices-payments" element={<ClientInvoicesPayments />} />
+                <Route path="feedback" element={<ClientFeedback />} />
+                <Route path="profile" element={<ClientProfile />} />
+                <Route path="*" element={<Navigate to="dashboard" replace />} />
+              </Routes>
+            </ProtectedRoute>
+          } />
 
-        {/* Employee Routes */}
-        <Route path="/employee/*" element={
-          <ProtectedRoute allowedRoles={['employee']}>
-            <Routes>
-              <Route path="dashboard" element={<EmployeeDashboard />} />
-              <Route path="tasks" element={<EmployeeTasks />} />
-              <Route path="schedule" element={<EmployeeSchedule />} />
-              <Route path="history" element={<EmployeeHistory />} />
-              <Route path="profile" element={<EmployeeProfile />} />
-              <Route path="earnings" element={<EmployeeEarnings />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Routes>
-          </ProtectedRoute>
-        } />
+          {/* Employee Routes */}
+          <Route path="/employee/*" element={
+            <ProtectedRoute allowedRoles={['employee']}>
+              <Routes>
+                <Route path="dashboard" element={<EmployeeDashboard />} />
+                <Route path="tasks" element={<EmployeeTasks />} />
+                <Route path="schedule" element={<EmployeeSchedule />} />
+                <Route path="history" element={<EmployeeHistory />} />
+                <Route path="profile" element={<EmployeeProfile />} />
+                <Route path="earnings" element={<EmployeeEarnings />} />
+                <Route path="*" element={<Navigate to="dashboard" replace />} />
+              </Routes>
+            </ProtectedRoute>
+          } />
 
-        <Route path="/" element={<HomeRedirect />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
+          <Route path="/" element={<HomeRedirect />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </SidebarProvider>
     </AuthProvider>
   );
 };

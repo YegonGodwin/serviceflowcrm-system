@@ -1,6 +1,7 @@
-import { Bell, CirclePlus, FileText, Power, Search, Settings } from "lucide-react";
+import { Bell, CirclePlus, FileText, Menu, Power, Search, Settings } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useSidebar } from "../../context/SidebarContext";
 
 interface TopbarProps {
   title?: string;
@@ -9,6 +10,7 @@ interface TopbarProps {
 export default function Topbar({ title = "Dashboard" }: TopbarProps) {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const { toggle } = useSidebar();
 
   const handlePlusClick = () => {
     if (user?.role === 'admin') {
@@ -30,6 +32,13 @@ export default function Topbar({ title = "Dashboard" }: TopbarProps) {
 
   return (
     <header className="dashboard-topbar">
+      <button 
+        className="hamburger-btn" 
+        onClick={toggle}
+        aria-label="Toggle Sidebar"
+      >
+        <Menu size={24} />
+      </button>
       <h1>{title}</h1>
       <div className="topbar-icons" aria-label="Toolbar">
         <button 

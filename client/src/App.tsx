@@ -21,6 +21,7 @@ import EmployeeTasks from "./components/employee/EmployeeTasks";
 import EmployeeSchedule from "./components/employee/EmployeeSchedule";
 import EmployeeHistory from "./components/employee/EmployeeHistory";
 import EmployeeProfile from "./components/employee/EmployeeProfile";
+import EmployeeEarnings from "./components/employee/EmployeeEarnings";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles?: string[] }) => {
@@ -82,6 +83,7 @@ const App = () => {
               <Route path="schedule" element={<EmployeeSchedule />} />
               <Route path="history" element={<EmployeeHistory />} />
               <Route path="profile" element={<EmployeeProfile />} />
+              <Route path="earnings" element={<EmployeeEarnings />} />
               <Route path="*" element={<Navigate to="dashboard" replace />} />
             </Routes>
           </ProtectedRoute>

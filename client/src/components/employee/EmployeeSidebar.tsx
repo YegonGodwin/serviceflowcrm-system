@@ -39,6 +39,7 @@ const navSections: NavSection[] = [
   {
     title: "Account",
     items: [
+      { label: "Earnings & Payslips", icon: LayoutDashboard, path: "/employee/earnings" },
       { label: "Profile", icon: UserRound, path: "/employee/profile" },
     ],
   },

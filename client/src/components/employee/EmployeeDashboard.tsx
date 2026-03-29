@@ -160,9 +160,9 @@ export default function EmployeeDashboard() {
               </div>
             </div>
 
-            {/* Recent Earnings Card */}
+            {/* Recent Payouts Card */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 lg:col-span-1">
-                <h3 className="text-lg font-semibold text-gray-800 mb-6">Recent Earnings</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-6">Recent Payouts</h3>
                 <div className="space-y-4">
                     {isLoading ? (
                       <div className="flex justify-center p-4">
@@ -173,7 +173,7 @@ export default function EmployeeDashboard() {
                         {recentEarnings.map((earning: any) => (
                           <div key={earning._id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">
                             <div className="overflow-hidden">
-                              <p className="text-sm font-bold text-gray-800 truncate">{earning.serviceRequest?.title || "Service Commission"}</p>
+                              <p className="text-sm font-bold text-gray-800 truncate">{earning.serviceRequest?.title || "Service Payout"}</p>
                               <p className="text-[10px] text-gray-500">{new Date(earning.createdAt).toLocaleDateString()} • {earning.invoice?.invoiceNumber}</p>
                             </div>
                             <div className="text-right ml-2">
@@ -183,11 +183,14 @@ export default function EmployeeDashboard() {
                           </div>
                         ))}
                         {recentEarnings.length === 0 && (
-                          <p className="text-center py-8 text-gray-500 text-sm">No earnings recorded yet.</p>
+                          <p className="text-center py-8 text-gray-500 text-sm">No payouts recorded yet.</p>
                         )}
                         {recentEarnings.length > 0 && (
-                           <button className="w-full py-2 text-xs font-bold text-blue-600 border border-blue-100 rounded-lg hover:bg-blue-50 transition-colors">
-                             View Earnings Report
+                           <button 
+                             onClick={() => navigate('/employee/earnings')}
+                             className="w-full py-2 text-xs font-bold text-blue-600 border border-blue-100 rounded-lg hover:bg-blue-50 transition-colors"
+                            >
+                             View Payout History
                            </button>
                         )}
                       </>

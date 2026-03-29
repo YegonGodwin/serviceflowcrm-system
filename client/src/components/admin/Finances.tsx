@@ -191,7 +191,7 @@ export default function Finances() {
                                 <div className="finance-stat-label">Net Profit</div>
                                 <div className="finance-stat-value text-green-700">Ksh {(stats.totalRevenue - earningStats.withdrawn).toLocaleString()}</div>
                                 <div className="finance-stat-change positive text-[10px] font-bold">
-                                    AFTER EMPLOYEE COMMISSIONS
+                                    AFTER EMPLOYEE PAYOUTS
                                 </div>
                             </div>
                         </div>
@@ -408,7 +408,7 @@ export default function Finances() {
                                         <tr>
                                             <th>Employee</th>
                                             <th>Service Task</th>
-                                            <th>Commission</th>
+                                            <th>Earned Amount</th>
                                             <th>Total Inv.</th>
                                             <th>Created On</th>
                                             <th>Status</th>

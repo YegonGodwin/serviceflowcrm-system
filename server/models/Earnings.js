@@ -26,7 +26,7 @@ const earningsSchema = new mongoose.Schema({
     },
     commissionPercentage: {
         type: Number,
-        default: 60, // Default 60%
+        default: 100, // Default 100%
     },
     status: {
         type: String,

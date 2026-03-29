@@ -22,7 +22,7 @@ const attributeCommission = async (invoice) => {
             return;
         }
 
-        const commissionPercentage = 60; // Could be fetched from settings in the future
+        const commissionPercentage = 100; // Employees receive 100% of the invoice amount
         const commissionAmount = (invoice.amount * commissionPercentage) / 100;
 
         await Earnings.create({
@@ -35,7 +35,7 @@ const attributeCommission = async (invoice) => {
             status: 'available' // Mark as available since payment is confirmed
         });
 
-        console.log(`Commission of ${commissionAmount} attributed to employee ${serviceRequest.assignedTo} for invoice ${invoice.invoiceNumber}.`);
+        console.log(`Full payment of ${commissionAmount} attributed to employee ${serviceRequest.assignedTo} for invoice ${invoice.invoiceNumber}.`);
     } catch (error) {
         console.error('Error attributing commission:', error.message);
     }

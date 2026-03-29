@@ -136,7 +136,7 @@ export default function EmployeeEarnings() {
                                 onClick={() => setActiveTab("earnings")}
                                 className={`pb-4 text-sm font-bold transition-all relative ${activeTab === "earnings" ? "text-blue-600" : "text-gray-400 hover:text-gray-600"}`}
                             >
-                                Service Commissions
+                                Service Payouts
                                 {activeTab === "earnings" && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
                             </button>
                         </div>
@@ -209,7 +209,7 @@ export default function EmployeeEarnings() {
                                             <tr className="text-gray-400 text-[11px] uppercase tracking-wider border-b border-gray-100">
                                                 <th className="pb-4 font-bold">Service Task</th>
                                                 <th className="pb-4 font-bold">Total Amount</th>
-                                                <th className="pb-4 font-bold">Your Commission</th>
+                                                <th className="pb-4 font-bold">Earned Amount</th>
                                                 <th className="pb-4 font-bold">Status</th>
                                                 <th className="pb-4 font-bold">Earned Date</th>
                                             </tr>
@@ -239,7 +239,7 @@ export default function EmployeeEarnings() {
                                             ))}
                                             {earnings.length === 0 && (
                                                 <tr>
-                                                    <td colSpan={5} className="text-center py-12 text-gray-500 italic">No service commissions found.</td>
+                                                    <td colSpan={5} className="text-center py-12 text-gray-500 italic">No service payouts found.</td>
                                                 </tr>
                                             )}
                                         </tbody>

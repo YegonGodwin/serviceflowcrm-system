@@ -7,7 +7,7 @@ import Topbar from "../admin/Topbar";
 import ClientSidebar from "./ClientSidebar";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
-import { downloadContractPDF } from "../../lib/downloadContract";
+import { downloadContractPDF } from "../../lib/downloadSignedContract";
 
 export default function ClientContracts() {
   const { logout, user } = useAuth();
@@ -410,7 +410,14 @@ export default function ClientContracts() {
               {selectedContract.status !== 'pending' && (
                 <button
                   type="button"
-                  onClick={() => downloadContractPDF(selectedContract)}
+                  onClick={async () => {
+                    try {
+                      const res = await api.get(`/contracts/${selectedContract._id}`);
+                      downloadContractPDF(res.data);
+                    } catch {
+                      downloadContractPDF(selectedContract);
+                    }
+                  }}
                   className="flex-1 py-3 bg-[#222659] text-white rounded-lg font-semibold hover:bg-[#1a1e4a] transition-all flex items-center justify-center gap-2"
                 >
                   <Download size={18} />

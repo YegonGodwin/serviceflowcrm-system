@@ -1,5 +1,19 @@
 import Contract from '../models/Contract.js';
 
+export const getContractById = async (req, res) => {
+    try {
+        const contract = await Contract.findById(req.params.id).populate('client', 'name email companyName phone');
+        if (!contract) return res.status(404).json({ message: 'Contract not found' });
+        // Enforce ownership for clients
+        if (req.user.role === 'client' && contract.client._id.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+        res.json(contract);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const createContract = async (req, res) => {
     try {
         const { client, title, amount, startDate, endDate, terms, paymentFrequency } = req.body;

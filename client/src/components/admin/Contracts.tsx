@@ -4,7 +4,7 @@ import Topbar from "./Topbar";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
-import { downloadContractPDF } from "../../lib/downloadContract";
+import { downloadContractPDF } from "../../lib/downloadSignedContract";
 
 export default function Contracts() {
   const { logout } = useAuth();
@@ -474,7 +474,14 @@ export default function Contracts() {
               </button>
               <button
                 type="button"
-                onClick={() => downloadContractPDF(viewContract)}
+                onClick={async () => {
+                  try {
+                    const res = await api.get(`/contracts/${viewContract._id}`);
+                    downloadContractPDF(res.data);
+                  } catch {
+                    downloadContractPDF(viewContract);
+                  }
+                }}
                 className="flex-1 py-3 bg-[#222659] text-white rounded-lg font-semibold hover:bg-[#1a1e4a] transition-all flex items-center justify-center gap-2"
               >
                 <Download size={18} />

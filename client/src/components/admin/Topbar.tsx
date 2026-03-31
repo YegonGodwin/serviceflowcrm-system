@@ -2,6 +2,7 @@ import { Bell, CirclePlus, FileText, Menu, Power, Search, Settings } from "lucid
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSidebar } from "../../context/SidebarContext";
+import NotificationDropdown from "../NotificationDropdown";
 
 interface TopbarProps {
   title?: string;
@@ -67,16 +68,9 @@ export default function Topbar({ title = "Dashboard" }: TopbarProps) {
         >
           <CirclePlus size={22} />
         </button>
-        <button 
-          type="button" 
-          aria-label="Notifications"
-          className="hover:text-[#F26323] transition-colors relative"
-          title="Notifications"
-          onClick={() => navigate(user?.role === 'admin' ? '/admin/feedback' : '/client/feedback')}
-        >
-          <Bell size={21} />
-          <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
+        
+        <NotificationDropdown />
+
         <button 
           type="button" 
           aria-label="Settings"

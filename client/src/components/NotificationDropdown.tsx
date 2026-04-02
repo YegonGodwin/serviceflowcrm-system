@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Bell, Check, Trash2, X } from "lucide-react";
+import { Bell, Check, Trash2 } from "lucide-react";
 import api from "../services/api";
 import { Link } from "react-router-dom";
 

@@ -6,13 +6,17 @@ import ClientSidebar from "./ClientSidebar";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../services/api";
 
+interface Feedback {
+  rating: number;
+}
+
 export default function ClientDashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [time, setTime] = useState(new Date());
   const [requests, setRequests] = useState([]);
   const [invoices, setInvoices] = useState([]);
-  const [feedbacks, setFeedbacks] = useState([]);
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

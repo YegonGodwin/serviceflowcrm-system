@@ -1,12 +1,17 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import { createContext, useState, useContext, useEffect, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface User {
+export interface User {
   _id: string;
   name: string;
   email: string;
   role: 'admin' | 'client' | 'employee';
   token: string;
+  phone?: string;
+  address?: string;
+  companyName?: string;
+  department?: string;
+  position?: string;
 }
 
 interface AuthContextType {

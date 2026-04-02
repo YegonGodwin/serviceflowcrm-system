@@ -1,5 +1,5 @@
 import {
-  AlignJustify, Briefcase, CircleAlert, Filter, MoreVertical, Search,
+  AlignJustify, CircleAlert, Filter, MoreVertical, Search,
   Loader2, X, FileSignature, CheckCircle, Calendar, HandCoins, PenLine, Trash2, Download
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

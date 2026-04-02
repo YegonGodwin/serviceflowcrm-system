@@ -1,4 +1,4 @@
-import { Search, Filter, MoreVertical, Briefcase, Loader2, UserPlus, CheckCircle, Clock } from "lucide-react";
+import { Search, Filter, Briefcase, Loader2, UserPlus, CheckCircle, Clock } from "lucide-react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { useEffect, useState } from "react";

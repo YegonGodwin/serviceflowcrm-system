@@ -1,16 +1,10 @@
 import {
-    DollarSign,
     TrendingUp,
     Wallet,
     Loader2,
     CheckCircle,
     Clock,
     Calendar,
-    ArrowUpRight,
-    ArrowDownRight,
-    ChevronRight,
-    Search,
-    Filter
 } from "lucide-react";
 import EmployeeSidebar from "./EmployeeSidebar";
 import Topbar from "../admin/Topbar";

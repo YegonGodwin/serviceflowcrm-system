@@ -1,4 +1,4 @@
-import { Bell, CirclePlus, FileText, Menu, Power, Search, Settings } from "lucide-react";
+import { CirclePlus, FileText, Menu, Power, Search, Settings } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSidebar } from "../../context/SidebarContext";

@@ -7,7 +7,6 @@ import {
     HandCoins,
     Search,
     TrendingUp,
-    Wallet,
     Loader2,
     Send,
     CheckCircle,

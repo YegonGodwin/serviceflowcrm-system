@@ -11,7 +11,7 @@ export default function ClientProfile() {
   
   // Local Form State
   const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
+  const email = user?.email || "";
   const [phone, setPhone] = useState(user?.phone || "");
   const [companyName, setCompanyName] = useState(user?.companyName || "");
   const [address, setAddress] = useState(user?.address || "");

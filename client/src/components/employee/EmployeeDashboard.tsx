@@ -1,7 +1,7 @@
 import EmployeeSidebar from "./EmployeeSidebar";
 import Topbar from "../admin/Topbar";
 import EmployeeDashboardHeader from "./EmployeeDashboardHeader";
-import { Briefcase, CheckCircle, Clock, Calendar, Loader2, ChevronRight, Wallet, TrendingUp } from "lucide-react";
+import { Briefcase, CheckCircle, Loader2, ChevronRight, Wallet, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";

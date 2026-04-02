@@ -7,7 +7,6 @@ import {
     Lock,
     Mail,
     MapPinHouse,
-    Palette,
     Phone,
     Save,
     Shield,
@@ -21,10 +20,6 @@ import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 
 type SettingsTab = "company" | "account" | "notifications" | "security" | "roles";
-
-interface SettingsProps {
-    onLogout?: () => void;
-}
 
 export default function Settings() {
     const { logout } = useAuth();
